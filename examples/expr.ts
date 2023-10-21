@@ -5,7 +5,7 @@ export {}
 //   B   :: Bool -> Expr Bool
 //   Add :: Expr Int -> Expr Int -> Expr Int
 //   Mul :: Expr Int -> Expr Int -> Expr Int
-//   Eq  :: Eq b => Expr b -> Expr b -> Expr Bool
+//   Eq  :: Eq x => Expr x -> Expr x -> Expr Bool
 
 // Yoneda says that:
 // (Functor f) => f a ~ (forall r. (a -> r) -> f r)
@@ -111,6 +111,7 @@ interface Equal<A> {
 }
 
 // this constructor combines two Expr<X> into an encoded Expr<boolean> representing their equality
+// note: X has existential nature
 function Equal_y<X>(ex1: Expr<X>, ex2: Expr<X>) {
     return <R>(eq:(_: boolean) => R): Expr<R> => ({
         equal: cont => cont({
