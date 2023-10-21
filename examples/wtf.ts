@@ -189,4 +189,4 @@ function evalWtf<A>(w: Wtf<A>): A {
 
 const complexWtf = fmap(([s, n]) => `${s}${n}`, complex("a", 1, true))
 
-console.log(evalWtf(complexWtf))
+console.log(evalWtf(complexWtf)) // "a1"
