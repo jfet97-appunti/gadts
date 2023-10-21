@@ -25,6 +25,7 @@ interface Nul<A> {
     _tag: "Nul"
 }
 
+// this constructor creates an encoded value of type forall A. Wtf<A>
 function Nul_y<_A>() {
     return <R>(eq:(_: _A) => R): Wtf<R> => ({
         nul: cont => cont({
@@ -65,6 +66,7 @@ interface SimpleEx<A> {
     _tag: "SimpleEx"
 }
 
+// given a value of type A this constructor creates an encoded value of type Wtf<A>
 function SimpleEx_y<_A>(_a: _A) {
     return <R>(eq:(_: _A) => R): Wtf<R> => ({
         simple: cont => cont({
@@ -90,6 +92,8 @@ interface ComplexEx<A> {
     _tag: "ComplexEx"
 }
 
+// given three values of type A, B, C this constructor creates an encoded value of type Wtf<[A,B]>
+// C maintains its existential nature, while A and B lose their existentiality because they are equated to the universal type declared by Wtf.
 function ComplexEx_y<_A, _B, _C>(_a: _A, _b: _B, _c: _C) {
     return <R>(eq:(_: [_A, _B]) => R): Wtf<R> => ({
         complex: cont => cont({
