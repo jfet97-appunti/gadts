@@ -105,8 +105,8 @@ interface EqualU<A, X> {
 }
 
 interface Equal<A> {
-  // ∃B.Equal<A, B> ~ ∀R.((∃A.Equal<A, B>) => R) => R
-  equal: <R>(_: <B>(_: EqualU<A, B>) => R) => R,
+  // ∃X.Equal<A, X> ~ ∀R.(∀X.Equal<A, X> => R) => R
+  equal: <R>(_: <X>(_: EqualU<A, X>) => R) => R,
   _tag: "Eq"
 }
 
