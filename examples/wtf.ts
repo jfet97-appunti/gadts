@@ -25,7 +25,8 @@ interface Nul<A> {
     _tag: "Nul"
 }
 
-// this constructor creates an encoded value of type forall A. Wtf<A>
+// this constructor creates an encoded value of type forall _A. Wtf<_A>
+// note: _A sort of loses its existential nature because it got equated to the universal type declared by Wtf
 function Nul_y<_A>() {
     return <R>(eq:(_: _A) => R): Wtf<R> => ({
         nul: cont => cont({
@@ -66,7 +67,8 @@ interface SimpleEx<A> {
     _tag: "SimpleEx"
 }
 
-// given a value of type A this constructor creates an encoded value of type Wtf<A>
+// given a value of type _A this constructor creates an encoded value of type Wtf<_A>
+// note: _A sort of loses its existential nature because it got equated to the universal type declared by Wtf
 function SimpleEx_y<_A>(_a: _A) {
     return <R>(eq:(_: _A) => R): Wtf<R> => ({
         simple: cont => cont({
@@ -92,8 +94,9 @@ interface ComplexEx<A> {
     _tag: "ComplexEx"
 }
 
-// given three values of type A, B, C this constructor creates an encoded value of type Wtf<[A,B]>
-// C maintains its existential nature, while A and B lose their existentiality because they are equated to the universal type declared by Wtf.
+// given three values of type _A, _B, _C this constructor creates an encoded value of type Wtf<[_A, _B]>
+// note: _C maintains its existential nature, while _A and _B sort of lose their existentiality
+// because they got equated to the universal type declared by Wtf
 function ComplexEx_y<_A, _B, _C>(_a: _A, _b: _B, _c: _C) {
     return <R>(eq:(_: [_A, _B]) => R): Wtf<R> => ({
         complex: cont => cont({
@@ -139,6 +142,11 @@ function to_yoneda<A>(decoded: Wtf<A>): <R>(eq: (_: A) => R) => Wtf<R> {
 function from_yoneda<A>(encoded: <R>(eq: (_: A) => R) => Wtf<R>): Wtf<A> {
     return encoded(_ => _)
 }
+
+// examples
+
+const ex = from_yoneda(to_yoneda(wnt(1)))
+//    ^?
 
 // ------------------- helpers -------------------
 
