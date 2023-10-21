@@ -187,6 +187,12 @@ function evalWtf<A>(w: Wtf<A>): A {
 
 // examples
 
-const complexWtf = fmap(([s, n]) => `${s}${n}`, complex("a", 1, true))
+const complexWtfErr: Wtf<[string, number]> = complex("a", "b", true)
 
-console.log(evalWtf(complexWtf)) // "a1"
+const complexWtf: Wtf<[string, number]> = complex("a", 1, true)
+
+const complexWtf2 = complex("a", 1, true)
+//    ^?
+
+console.log(evalWtf(fmap(([s, n]) => `${s}${n}`, complexWtf))) // "a1"
+console.log(evalWtf(fmap(([s, n]) => [n, s] as const, complexWtf2))) // [1, "a"]
